@@ -31,7 +31,7 @@
 
 # Program information
 readonly prog_name="kalitorify"
-readonly version="1.14.0"
+readonly version="1.14.0-deb"
 readonly author="Brainfuck"
 readonly git_url="https://github.com/brainfucksec/kalitorify"
 
@@ -54,8 +54,8 @@ export endc=$'\e[0m'
 
 # Configuration files: /usr/share/kalitorify/data
 # Backup files: /opt/kalitorify/backups
-readonly config_dir="/usr/share/kalitorify/data"
-readonly backup_dir="/opt/kalitorify/backups"
+readonly config_dir="kalitorify/data"
+readonly backup_dir="kalitorify/backups"
 
 
 # ===================================================================
@@ -125,7 +125,7 @@ check_root() {
 print_version() {
     printf "%s\\n" "$prog_name version $version"
     printf "%s\\n" "$(tor --version)"
-	exit 0
+    exit 0
 }
 
 
@@ -138,16 +138,16 @@ print_version() {
 # If ufw is installed and/or active, disable it, if isn't installed,
 # do nothing, don't display nothing to user, just jump to the next function
 disable_ufw() {
-	if hash ufw 2>/dev/null; then
-    	if ufw status | grep -q active$; then
-        	printf "${blue}%s${endc} ${green}%s${endc}\\n" \
+    if hash ufw 2>/dev/null; then
+        if ufw status | grep -q active$; then
+            printf "${blue}%s${endc} ${green}%s${endc}\\n" \
                    "::" "Disabling firewall ufw, please wait..."
-        	ufw disable
-    	else
-    		ufw status | grep -q inactive$;
-        	printf "${blue}%s${endc} ${green}%s${endc}\\n" \
+            ufw disable
+        else
+            ufw status | grep -q inactive$;
+            printf "${blue}%s${endc} ${green}%s${endc}\\n" \
                    "::" "Firewall ufw is inactive, continue..."
-    	fi
+        fi
     fi
 }
 
@@ -159,11 +159,11 @@ disable_ufw() {
 # Often, if ufw isn't installed, again, do nothing
 # and jump to the next function
 enable_ufw() {
-	if hash ufw 2>/dev/null; then
-    	if ufw status | grep -q inactive$; then
-        	printf "\\n${blue}%s${endc} ${green}%s${endc}\\n" \
+    if hash ufw 2>/dev/null; then
+        if ufw status | grep -q inactive$; then
+            printf "\\n${blue}%s${endc} ${green}%s${endc}\\n" \
                    "::" "Enabling firewall ufw, please wait..."
-        	ufw enable
+            ufw enable
         fi
     fi
 }
@@ -375,7 +375,7 @@ main() {
     check_status
 
     printf "${cyan}%s${endc} ${green}%s${endc}\\n" \
-    	    "[ ok ]" "Transparent Proxy activated, your system is under Tor"
+            "[ ok ]" "Transparent Proxy activated, your system is under Tor"
 }
 
 
